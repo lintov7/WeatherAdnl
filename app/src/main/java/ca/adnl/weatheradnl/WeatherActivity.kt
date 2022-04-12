@@ -12,14 +12,10 @@ import ca.adnl.weatheradnl.models.City
 import ca.adnl.weatheradnl.models.WeatherData
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class WeatherActivity : AppCompatActivity() {
-    var job = Job()
-    var scope = CoroutineScope(Dispatchers.IO + job)
+    var scope = CoroutineScope(Dispatchers.IO)
     lateinit var binding: ActivityWeatherBinding
     var city: City? = null
     companion object{
@@ -83,6 +79,11 @@ class WeatherActivity : AppCompatActivity() {
             onBackPressed()
         }
 
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        scope.cancel()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
