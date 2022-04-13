@@ -3,6 +3,7 @@ package ca.adnl.weatheradnl
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import ca.adnl.weatheradnl.databinding.ActivityMainBinding
 
@@ -37,6 +38,7 @@ class MainActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(this@MainActivity)
             adapter = this@MainActivity.adapter
         }
+
     }
 
     override fun onResume() {
@@ -47,5 +49,10 @@ class MainActivity : AppCompatActivity() {
     private fun loadData() {
         val cities = dbHelper.getAllCities()
         adapter.setNewItems(cities)
+        if(cities.isEmpty()){
+            binding.tvEmpty.visibility = View.VISIBLE
+        }else{
+            binding.tvEmpty.visibility = View.GONE
+        }
     }
 }
